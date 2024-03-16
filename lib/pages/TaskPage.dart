@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import '../view/widgets/ListView.dart';
 import '../models/Task.dart';
@@ -13,15 +11,8 @@ class TaskPages extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<TaskPages> {
-  List<Task> listaTareas = getTasks();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:
-          //gettextExample()
-          //getListView2(listaTareas[0])
-          ListViewWidget;
-    );
+    return const Scaffold(body: ListViewWidget());
   }
 }

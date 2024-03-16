@@ -40,11 +40,49 @@ class _MainAppState extends State<MainApp> {
     );
   }
 
+  // Scaffold getScaffold() {
+  //   return Scaffold(
+  //     appBar: getAppBar(),
+  //     body: getBody(),
+  //     bottomNavigationBar: BottomNavigationBar(items: const [
+  //       //esto es un componente del scaffold y  añade una barra de navegacion en la parte inferior de la pantalla
+  //       //en este muchachon pones iconos y labels, los labels son como subtitulos de los iconos
+  //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+  //       BottomNavigationBarItem(icon: Icon(Icons.list), label: "List"),
+  //       BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings")
+  //     ]),
+  //     floatingActionButton: FloatingActionButton(
+  //       // esto es otro componente del Scaffold, este crea un boton en la parte inferior derecha de la pantalla
+  //       onPressed: () {
+  //         print('object');
+  //       },
+  //     ),
+  //   );
+  // }
+
   Center getBody() {
     return Center(
       child: TaskPages(),
     );
   }
+  // Center getBody() {
+  //   return Center(
+  //       child: Column(
+  //     children: [
+  //       TextButton(
+  //           //Un boton normalito, al parecer se puede poner dentro de columnas
+  //           onPressed: () => print("papaya"),
+  //           child: Text("Ayawuaska")),
+  //       Checkbox(
+  //           value: valueCheckbox,
+  //           onChanged: (value) {
+  //             valueCheckbox = value;
+  //             print(value);
+  //             setState(() {});
+  //           })
+  //     ],
+  //   ));
+  // }
 
   AppBar getAppBar() {
     return AppBar(

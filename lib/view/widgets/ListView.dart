@@ -1,43 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_application/controllers/TaskController.dart';
 import 'package:tasks_application/models/Task.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class ListViewWidget extends StatefulWidget {
+  const ListViewWidget({super.key});
 
   @override
-  State<MyWidget> createState() => _ListViewWidget();
+  State<ListViewWidget> createState() => _ListViewWidget();
 }
 
-class _ListViewWidget extends State<MyWidget> {
+class _ListViewWidget extends State<ListViewWidget> {
   bool? valueCheckBox = false;
+  late List<Task> listatareas = [
+    Task(
+        name: "Tarea de desarrollo movil",
+        description: "crear una aplicación de Tareas",
+        state: false),
+    Task(
+        name: "Tarea de Matematicas 1",
+        description: "crear un nuevo axioma",
+        state: false),
+    Task(
+        name: "Tarea de Biología",
+        description: "descubrir la cura del cancer",
+        state: true),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return getCheckBox();
+    return getListView(listatareas);
   }
 
   ListView getListView(List<Task> listaTareas) {
-    _ListViewWidget object = _ListViewWidget();
     return ListView.builder(
       itemCount: listaTareas.length,
       itemBuilder: (BuildContext context, int index) {
         String? name = listaTareas[index].name;
         String? description = listaTareas[index].description;
+        bool? state = listaTareas[index].state;
         return ListTile(
           title: Text(name!),
           subtitle: Text(description!),
           leading: const Icon(Icons.book),
-          trailing: object.getCheckBox(),
+          trailing: Container(
+            width: 100,
+            child: Row(
+              children: [
+                getCheckBox(state!, listaTareas, index),
+                getDeleteButton(listaTareas, index),
+              ],
+            ),
+          ),
         );
       },
     );
   }
 
-  Checkbox getCheckBox() {
+  Checkbox getCheckBox(bool state, List<Task> listaTareas, dynamic index) {
     return Checkbox(
-        value: valueCheckBox,
+        value: state,
         onChanged: (value) {
-          valueCheckBox = value;
+          listaTareas[index].state = value!;
           setState(() {});
         });
+  }
+
+  Widget getDeleteButton(List<Task> listaTareas, dynamic index) {
+    return IconButton(
+        icon: const Icon(Icons.delete),
+        color: Colors.blueGrey,
+        onPressed: () {
+          eliminarTarea(listaTareas, index);
+        });
+  }
+
+  void eliminarTarea(List<Task> listaTareas, dynamic index) {
+    setState(() {
+      listaTareas.removeAt(index);
+    });
+  }
+
+  void crearTarea(List<Task> listaTareas, Task tarea) {
+    listatareas.add(tarea);
   }
 }
