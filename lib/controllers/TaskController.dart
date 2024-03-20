@@ -1,19 +1,17 @@
-import 'package:flutter/material.dart';
 import '../models/Task.dart';
 
-List<Task> getTasks() {
-  return [
-    Task(
-        name: "Tarea de desarrollo movil",
-        description: "crear una aplicación de Tareas",
-        state: false),
-    Task(
-        name: "Tarea de Matematicas 1",
-        description: "crear un nuevo axioma",
-        state: false),
-    Task(
-        name: "Tarea de Biología",
-        description: "descubrir la cura del cancer",
-        state: true),
-  ];
+class TaskController {
+  late Task task;
+
+  TaskController() {
+    task = Task.empty();
+  }
+
+  void deleteTask(List<Task> listaTareas, dynamic index) {
+    task.deleteTask(listaTareas, index);
+  }
+
+  void addTask(List<Task> listaTareas, Task task) {
+    task.addTask(listaTareas, task);
+  }
 }

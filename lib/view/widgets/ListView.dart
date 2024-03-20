@@ -11,6 +11,8 @@ class ListViewWidget extends StatefulWidget {
 
 class _ListViewWidget extends State<ListViewWidget> {
   bool? valueCheckBox = false;
+  TaskController taskController = TaskController();
+
   late List<Task> listatareas = [
     Task(
         name: "Tarea de desarrollo movil",
@@ -70,14 +72,10 @@ class _ListViewWidget extends State<ListViewWidget> {
         icon: const Icon(Icons.delete),
         color: Colors.blueGrey,
         onPressed: () {
-          eliminarTarea(listaTareas, index);
+          setState(() {
+            taskController.deleteTask(listaTareas, index);
+          });
         });
-  }
-
-  void eliminarTarea(List<Task> listaTareas, dynamic index) {
-    setState(() {
-      listaTareas.removeAt(index);
-    });
   }
 
   void crearTarea(List<Task> listaTareas, Task tarea) {
