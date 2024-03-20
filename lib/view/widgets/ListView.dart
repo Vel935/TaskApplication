@@ -30,7 +30,49 @@ class _ListViewWidget extends State<ListViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return getListView(listatareas);
+    return getScaffold(listatareas);
+  }
+
+  Scaffold getScaffold(List<Task> listaTareas) {
+    return Scaffold(
+        appBar: getAppBarHome(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => getformNote(listaTareas),
+            ));
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: Center(child: getListView(listatareas)));
+  }
+
+  AppBar getAppBarHome() {
+    return AppBar(
+      title: const Text(
+        "Lista de Tareas",
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
+      backgroundColor: Colors.orange,
+      // actions: const [
+      //   //lista de widgets que se mostraran dentro del appbar (suele usarse para poner iconos)
+      //   Icon(Icons.settings)
+      // ],
+    );
+  }
+
+  AppBar getAppBarCreation() {
+    return AppBar(
+      title: const Text(
+        "Lista de Tareas",
+        style: TextStyle(fontWeight: FontWeight.w500),
+      ),
+      backgroundColor: Colors.orange,
+      // actions: const [
+      //   //lista de widgets que se mostraran dentro del appbar (suele usarse para poner iconos)
+      //   Icon(Icons.settings)
+      // ],
+    );
   }
 
   ListView getListView(List<Task> listaTareas) {
@@ -78,7 +120,48 @@ class _ListViewWidget extends State<ListViewWidget> {
         });
   }
 
-  void crearTarea(List<Task> listaTareas, Task tarea) {
-    listatareas.add(tarea);
+  ElevatedButton getSubmitButton(List<Task> listaTareas, Task task) {
+    return ElevatedButton(
+        onPressed: () {
+          setState(() {
+            taskController.addTask(listaTareas, task);
+            Navigator.pop(context);
+          });
+        },
+        child: Text("Enviar"));
+  }
+
+  Widget getformNote(List<Task> listaTareas) {
+    Task task = Task(name: "", description: "", state: false);
+    return Scaffold(
+      body: ListView(
+        children: [
+          TextFormField(
+            onChanged: (v) {
+              task.name = v;
+              setState(() {});
+            },
+            decoration: const InputDecoration(
+              hintText: "Nombre de la nota",
+              labelText: "Nombre",
+              prefixIcon: Icon(Icons.note),
+            ),
+          ),
+          TextFormField(
+            onChanged: (v) {
+              task.description = v;
+              setState(() {});
+            },
+            decoration: const InputDecoration(
+              hintText: "Descripción de la nota",
+              labelText: "Descripción",
+              prefixIcon: Icon(Icons.library_add),
+            ),
+          ),
+          getSubmitButton(listaTareas, task)
+        ],
+      ),
+      appBar: getAppBarCreation(),
+    );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tasks_application/view/widgets/MainScaffold.dart';
 import 'pages/TaskPages.dart';
-import './view/widgets/FormNote.dart';
 
 void main() {
   runApp(const MainApp());
@@ -16,7 +14,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner:
           false, //elimina el letrero rojo en la esquina superior derecha que dice debug
-      home: MainScaffold(),
+      home: TaskPages(),
     );
   }
 
