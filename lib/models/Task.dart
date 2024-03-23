@@ -22,4 +22,10 @@ class Task {
   void addTask(List<Task> listaTareas, Task task) {
     listaTareas.add(task);
   }
+
+  void editTask(
+      List<Task> listaTareas, dynamic index, String description, String name) {
+    listaTareas[index].description = description;
+    listaTareas[index].name = name;
+  }
 }

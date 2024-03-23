@@ -14,4 +14,9 @@ class TaskController {
   void addTask(List<Task> listaTareas, Task task) {
     task.addTask(listaTareas, task);
   }
+
+  void editTask(
+      List<Task> listaTareas, dynamic index, String description, String name) {
+    task.editTask(listaTareas, index, description, name);
+  }
 }

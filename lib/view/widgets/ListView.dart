@@ -39,7 +39,7 @@ class _ListViewWidget extends State<ListViewWidget> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => getformNote(listaTareas),
+              builder: (context) => getformAddNote(listaTareas),
             ));
           },
           child: const Icon(Icons.add),
@@ -87,10 +87,12 @@ class _ListViewWidget extends State<ListViewWidget> {
           subtitle: Text(description!),
           leading: const Icon(Icons.book),
           trailing: Container(
-            width: 100,
+            width: 145,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 getCheckBox(state!, listaTareas, index),
+                getEditButton(listaTareas, index),
                 getDeleteButton(listaTareas, index),
               ],
             ),
@@ -111,13 +113,47 @@ class _ListViewWidget extends State<ListViewWidget> {
 
   Widget getDeleteButton(List<Task> listaTareas, dynamic index) {
     return IconButton(
-        icon: const Icon(Icons.delete),
+      icon: const Icon(Icons.delete),
+      color: Colors.blueGrey,
+      onPressed: () {
+        setState(() {
+          taskController.deleteTask(listaTareas, index);
+        });
+      },
+      iconSize: 20,
+    );
+  }
+
+  Widget getEditButton(List<Task> listaTareas, dynamic index) {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: IconButton(
+        icon: const Icon(Icons.edit),
         color: Colors.blueGrey,
         onPressed: () {
           setState(() {
-            taskController.deleteTask(listaTareas, index);
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => getformEditNote(listaTareas, index),
+            ));
           });
+        },
+        iconSize: 20,
+      ),
+    );
+  }
+
+  Widget getSubmitEditButton(List<Task> listaTareas, dynamic index, Task task) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          taskController.editTask(
+              listaTareas, index, task.description!, task.name!);
+          Navigator.pop(context);
         });
+        setState(() {});
+      },
+      child: Text("Agregar"),
+    );
   }
 
   ElevatedButton getSubmitButton(List<Task> listaTareas, Task task) {
@@ -128,10 +164,20 @@ class _ListViewWidget extends State<ListViewWidget> {
             Navigator.pop(context);
           });
         },
-        child: Text("Enviar"));
+        child: Text("Agregar"));
   }
 
-  Widget getformNote(List<Task> listaTareas) {
+  ElevatedButton getCancelButton() {
+    return ElevatedButton(
+        onPressed: () {
+          setState(() {
+            Navigator.pop(context);
+          });
+        },
+        child: Text("Cancelar"));
+  }
+
+  Widget getformAddNote(List<Task> listaTareas) {
     Task task = Task(name: "", description: "", state: false);
     return Scaffold(
       body: ListView(
@@ -158,7 +204,48 @@ class _ListViewWidget extends State<ListViewWidget> {
               prefixIcon: Icon(Icons.library_add),
             ),
           ),
-          getSubmitButton(listaTareas, task)
+          getSubmitButton(listaTareas, task),
+          getCancelButton(),
+        ],
+      ),
+      appBar: getAppBarCreation(),
+    );
+  }
+
+  Widget getformEditNote(List<Task> listaTareas, dynamic index) {
+    Task task = Task(name: "", description: "", state: false);
+
+    return Scaffold(
+      body: ListView(
+        children: [
+          TextFormField(
+            onChanged: (v) {
+              task.name = v;
+
+              setState(() {});
+            },
+            decoration: const InputDecoration(
+              hintText: "Nombre de la nota",
+              labelText: "Nombre",
+              prefixIcon: Icon(Icons.note),
+            ),
+            initialValue: listatareas[index].name,
+          ),
+          TextFormField(
+            onChanged: (v) {
+              task.description = v;
+
+              setState(() {});
+            },
+            decoration: const InputDecoration(
+              hintText: "Descripción de la nota",
+              labelText: "Descripción",
+              prefixIcon: Icon(Icons.library_add),
+            ),
+            initialValue: listatareas[index].description,
+          ),
+          getSubmitEditButton(listaTareas, index, task),
+          getCancelButton(),
         ],
       ),
       appBar: getAppBarCreation(),
