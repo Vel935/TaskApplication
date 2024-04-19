@@ -160,11 +160,16 @@ class _ListViewWidget extends State<ListViewWidget> {
     return ElevatedButton(
         onPressed: () {
           setState(() {
-            taskController.addTask(listaTareas, task);
+            taskController
+                .create({"title": task.name, "description": task.description})
+                .then((id) => print(id))
+                .catchError((e) => print(e));
+
+            //taskController.addTask(listaTareas, task);
             Navigator.pop(context);
           });
         },
-        child: Text("Agregar"));
+        child: const Text("Agregar"));
   }
 
   ElevatedButton getCancelButton() {
@@ -206,6 +211,15 @@ class _ListViewWidget extends State<ListViewWidget> {
           ),
           getSubmitButton(listaTareas, task),
           getCancelButton(),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     taskController
+          //         .create({"title": "Tarea 1"})
+          //         .then((id) => print(id))
+          //         .catchError((e) => print(e));
+          //   },
+          //   child: const Text("Crear tarea"),
+          // )
         ],
       ),
       appBar: getAppBarCreation(),
